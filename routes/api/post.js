@@ -45,7 +45,7 @@ router.post('/insertHostel', passport.authenticate('jwt', { session: false}), (r
         price: req.body.price,
         room: req.body.room,
         emtpy: req.body.emtpy,
-        map: req.body.address
+        // map: req.body.address
     });
 
     newPost.save().then((hostel) => {
