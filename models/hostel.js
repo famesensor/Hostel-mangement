@@ -25,10 +25,20 @@ let hostelSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    // map: {
-    //     type: String,
-    //     required: true
-    // },
+    map: {
+        address: {
+            type: String,
+            required: true
+        },
+        latitude: {
+            type: String,
+            required: true
+        },
+        longitude: {
+            type: String,
+            required: true
+        }
+    },
     created: {
         type: Date,
         default: Date.now

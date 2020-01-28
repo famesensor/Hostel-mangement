@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
 let userSchema = new mongoose.Schema({
     username: {
@@ -34,8 +35,8 @@ let userSchema = new mongoose.Schema({
     },
     book: [{
         hostelBook: {
-            type: Schema.Types.ObjectId,
-            ref: 'hostel'
+            type: ObjectId,
+            ref: 'hostels'
         },
         dateBook: {
             date: {
