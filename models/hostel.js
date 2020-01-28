@@ -15,22 +15,20 @@ let hostelSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: "Empty"
+        default: 'Empty'
     },
-    map: {
-        type: String,
+    room: {
+        type: Number,
         required: true
     },
-    // book: [{
-    //     date: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     bookingBy: {
-    //         type: ObjectId,
-    //         ref: "users"
-    //     }
-    // }],
+    empty: {
+        type: Number,
+        required: true
+    },
+    // map: {
+    //     type: String,
+    //     required: true
+    // },
     created: {
         type: Date,
         default: Date.now

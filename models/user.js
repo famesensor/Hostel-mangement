@@ -32,6 +32,29 @@ let userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    book: [{
+        hostelBook: {
+            type: Schema.Types.ObjectId,
+            ref: 'hostel'
+        },
+        dateBook: {
+            date: {
+                type: String,
+                required: true
+            },
+            time: {
+                type: String,
+                required: true
+            }
+        },
+        note: {
+            type: String
+        }
+    }],
+    status: {
+        type: String,
+        default: 'users'
+    },
     created: {
         type: Date,
         default:  Date.now
