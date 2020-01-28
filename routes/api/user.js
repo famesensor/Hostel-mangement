@@ -32,6 +32,11 @@ router.post('/register', (req, res) => {
                 errors.username = `Username alrady exists`;
                 return res.status(400).json(errors);
             }
+            
+            if (user) {
+                errors.email = `Email already exists`;
+                return res.status(400).json(errors);
+            }
 
             const newUser = new User({
                 username: req.body.username,
@@ -87,8 +92,8 @@ router.post('/login', (req, res) => {
                 .then((isMath) => {
                     if (isMath) {
                         // User Matched
-                        const payload = { id: user.id, name: user.name, email: user.email, birth: user.birth }
-
+                        const payload = { id: user.id, name: user.name, email: user.email}
+                        
                         jwt.sign(payload, key.secretOrKey, { expiresIn: 3600 }, (err, token) => {
                             res.json({
                                 success: true,
@@ -105,5 +110,17 @@ router.post('/login', (req, res) => {
                 })
         })
 });
+
+//  Return current user
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+    // console.log(req.user.name);
+    res.json({ 
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        birth: req.user.birth
+    })
+});
+
 
 module.exports = router;

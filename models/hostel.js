@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-let hostel = new mongoose.Schema({
+let hostelSchema = new mongoose.Schema({
     hostelname: {
         type: String,
         required: true
@@ -36,3 +36,5 @@ let hostel = new mongoose.Schema({
         default: Date.now
     }
 });
+
+module.exports = Hostel = mongoose.model('hostel', hostelSchema);
