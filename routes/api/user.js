@@ -30,12 +30,14 @@ router.post('/register', (req, res) => {
         .then((user) => {
             if (user) {
                 errors.username = `Username alrady exists`;
-                return res.status(400).json(errors);
+                errors.errors = 1; 
+                return res.status(200).json(errors);
             }
             
             if (user) {
                 errors.email = `Email already exists`;
-                return res.status(400).json(errors);
+                errors.errors = 1;
+                return res.status(200).json(errors);
             }
 
             const newUser = new User({
@@ -58,13 +60,13 @@ router.post('/register', (req, res) => {
                             res.json(user);
                         })
                         .catch((err) => {
-                            console.log(err);
+                            res.status(500).json({ errors : 'Internal Server Error'});
                         })
                 });
             });
         })
         .catch((err) => {
-            console.log(err);
+            res.status(500).json({ errors : 'Internal Server Error'});
         });
 });
 
@@ -85,7 +87,8 @@ router.post('/login', (req, res) => {
             // Check for user
             if (!user) {
                 errors.username = `User not found`;
-                return res.status(404).json(errors);
+                errors.errors = 1;
+                return res.json(errors);
             }
             
             bcrypt.compare(password, user.password)
@@ -102,11 +105,11 @@ router.post('/login', (req, res) => {
                         });
                     } else {
                         errors.password = `Password incorrect`;
-                        return res.status(400).json(errors);
+                        return res.json(errors);
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    res.status(500).json({ errors : 'Internal Server Error'});
                 })
         })
 });

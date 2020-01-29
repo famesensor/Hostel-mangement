@@ -10,12 +10,16 @@ let hostelSchema = new mongoose.Schema({
         required: true
     },
     detail: {
-        type: String,
-        required: true
+        atmosphere: {
+            type: String,
+        },
+        facilities: {
+            type: String
+        }
     },
     status: {
         type: String,
-        default: 'Empty'
+        default: 'available'
     },
     room: {
         type: Number,

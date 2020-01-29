@@ -19,40 +19,49 @@ router.get('/test', (req, res) => {
 router.get('/listhostel', (req, res) => {
     Hostel.find()
         .sort({ date: -1 })
-        .select({_id:0, created:0, __v:0})
+        .select({created:0, __v:0})
         .then((hostel) => {
-            res.json(hostel)
+            if (hostel.length > 0) {
+                res.json(hostel)
+            } else {
+                res.json({ msg: 'No hostels found' })
+            }
         })
         .catch((err) => {
-            res.status(404).json({ nopostsfound: 'No hostels found' })
+            res.status(500).json({ errors : 'Internal Server Error'});
         });
 });
 
 // Hostel route by id  
 router.get('/hostel/:id', (req, res) => {
     Hostel.findById(req.params.id)
-        .select({_id:0, created:0, __v:0})
+        .select({created:0, __v:0})
         .then((hostel) => {
-            res.json(hostel);
+            if (hostel.length === 0) {
+                res.json(hostel);
+            } else {
+                res.json({ msg : 'No hostel found with that ID'});
+
+            }
         })
         .catch((err) => {
-            res.status(404).json({ nohostel: 'No hostel found with that ID'});
+            res.status(500).json({ errors : 'Internal Server Error'});
         });
 });
 
 // Hostel available route
 router.get('/hostel-available', (req, res) => {
-    Hostel.find({ status: 'Empty' })
+    Hostel.find({ status: 'available' })
         .select({_id:0, created:0, __v:0})
         .then((hostel) => {
             if (hostel.length > 0) {
                 res.json(hostel)
             } else {
-                res.json({ Noone : 'No, Hostel is empty '})
+                res.json({ msg : 'No, Hostel is empty '})
             }
         })
         .catch((err) => {
-            console.log(err);
+            res.status(500).json({ errors : 'Internal Server Error'});
         })
 });
 
@@ -61,7 +70,10 @@ router.post('/insertHostel', passport.authenticate('jwt', { session: false}), (r
     if (req.user.status === 'admin') {
         const newHostel = new Hostel({
             hostelname: req.body.hostelname,
-            detail: req.body.detail,
+            detail: {
+                atmosphere: req.body.atmosphere,
+                facilities: req.body.facilities
+            },
             price: req.body.price,
             room: req.body.room,
             empty: req.body.empty,
@@ -72,14 +84,15 @@ router.post('/insertHostel', passport.authenticate('jwt', { session: false}), (r
             }
         });
     
-        newHostel.save().then((hostel) => {
-            res.json(hostel)
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+        newHostel.save()
+            .then((hostel) => {
+                res.json(hostel)
+            })
+            .catch((err) => {
+                res.status(500).json({ errors : err});
+            });
     } else {
-        return res.status(400).json("Admin only");
+        return res.status(403).json("Admin only");
     }
 });
 

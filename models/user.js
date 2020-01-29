@@ -33,25 +33,25 @@ let userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    book: [{
-        // name: {
-        //     fname: {
-        //         type: String,
-        //         required: true
-        //     },
-        //     lname: {
-        //         type: String,
-        //         required: true
-        //     }
-        // },
-        // phone: {
-        //     type: String,
-        //     required: true
-        // },
-        // email: {
-        //     type: String,
-        //     required: true
-        // },
+    books: [{
+        name: {
+            fname: {
+                type: String,
+                required: true
+            },
+            lname: {
+                type: String,
+                required: true
+            }
+        },
+        phone: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            required: true
+        },
         hostelBook: {
             type: ObjectId,
             ref: 'hostels'
