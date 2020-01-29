@@ -31,7 +31,7 @@ require('./config/passport')(passport);
 
 // Use Routes
 app.use('/api/users', user);
-app.use('/api/posts', post);
+app.use('/api/hostels', post);
 app.use('/api/books', book);
 
 // Set portnumber
