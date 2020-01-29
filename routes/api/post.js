@@ -37,7 +37,7 @@ router.get('/hostel/:id', (req, res) => {
     Hostel.findById(req.params.id)
         .select({created:0, __v:0})
         .then((hostel) => {
-            if (hostel.length === 0) {
+            if (hostel.length !== 0) {
                 res.json(hostel);
             } else {
                 res.json({ msg : 'No hostel found with that ID'});
