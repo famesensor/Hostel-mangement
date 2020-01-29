@@ -38,8 +38,10 @@ router.post('/:id', passport.authenticate('jwt', { session: false}), (req, res) 
                                     email: req.body.email,
                                     hostelBook: req.params.id,
                                     dateBook: {
-                                        date: req.body.date,
-                                        time: req.body.time
+                                        datein: req.body.datein,
+                                        dateout: req.body.dateout,
+                                        checkin: req.body.checkin,
+                                        checkout: req.body.checkout
                                     },
                                     note: req.body.note
                                 })
