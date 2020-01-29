@@ -1,5 +1,5 @@
 {
-    "*": "api docs",
+    "/": "api docs",
     "/api/users/test": "test api users",
     "/api/users/register": "resgister",
     "/api/users/login": "login",
