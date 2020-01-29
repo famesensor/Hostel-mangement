@@ -33,7 +33,7 @@ router.get('/listhostel', (req, res) => {
 });
 
 // Hostel route by id  
-router.get('/hostel/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     Hostel.findById(req.params.id)
         .select({created:0, __v:0})
         .then((hostel) => {

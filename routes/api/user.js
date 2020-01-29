@@ -28,16 +28,16 @@ router.post('/register', (req, res) => {
 
     User.findOne({ $or: [{ username: req.body.username }, { email: req.body.email }] })
         .then((user) => {
-            if (user.username === req.body.username) {
-                errors.username = `Username alrady exists`;
-                errors.errors = 1; 
-                return res.status(200).json(errors);
-            }
-            
-            if (user.email === req.body.email) {
-                errors.email = `Email already exists`;
-                errors.errors = 1;
-                return res.status(200).json(errors);
+            if (user) {
+                if (user.username === req.body.username) {
+                    errors.username = `Username alrady exists`;
+                    errors.errors = 1; 
+                    return res.status(200).json(errors);
+                } else {
+                    errors.email = `Email alrady exists`;
+                    errors.errors = 1; 
+                    return res.status(200).json(errors);
+                }    
             }
 
             const newUser = new User({
@@ -60,12 +60,13 @@ router.post('/register', (req, res) => {
                             res.json(user);
                         })
                         .catch((err) => {
-                            res.status(500).json({ errors : 'Internal Server Error'});
+                            console.log(err)
                         })
                 });
             });
         })
         .catch((err) => {
+            console.log(err)
             res.status(500).json({ errors : 'Internal Server Error'});
         });
 });
