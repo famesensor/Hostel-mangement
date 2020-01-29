@@ -10,6 +10,8 @@ const user = require('./routes/api/user');
 const post = require('./routes/api/post');
 const book = require('./routes/api/book');
 
+const apiDocs = require('./docs/apiDocs.json');
+
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
@@ -30,6 +32,9 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 // Use Routes
+app.get('*', (req, res) => {
+    return res.json(apiDocs)
+});
 app.use('/api/users', user);
 app.use('/api/hostels', post);
 app.use('/api/books', book);

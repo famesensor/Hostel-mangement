@@ -6,6 +6,9 @@ const passport = require('passport');
 const User = require('../../models/user');
 const Hostel = require('../../models/hostel');
 
+// import input validation
+const validateBookInput = require('../../validators/book');
+
 // Test post
 router.get('/test', (req, res) => {
     res.json({ msg : "Booking Works" })
@@ -14,6 +17,12 @@ router.get('/test', (req, res) => {
 // Booking route
 router.post('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     let empty = 0;
+    const { errors, isValid } = validateBookInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
 
     if (req.user.status === 'users') {
         Hostel.findById(req.params.id) 

@@ -28,7 +28,7 @@ module.exports = validateRegisterInput = (data) => {
         errors.lname = `LastName must be between 2 and 30 characters`;
     }
     if (Validator.isEmpty(data.lname)) {
-        errorslname = `LastName field is required`;
+        errors.lname = `LastName field is required`;
     }
     if (Validator.isEmpty(data.email)) {
         errors.email = `Email field is required`;
