@@ -30,7 +30,14 @@ router.post('/register', (req, res) => {
         .then((user) => {
             if (user) {
                 errors.username = `Username alrady exists`;
-                return res.status(400).json(errors);
+                errors.errors = 1; 
+                return res.status(200).json(errors);
+            }
+            
+            if (user) {
+                errors.email = `Email already exists`;
+                errors.errors = 1;
+                return res.status(200).json(errors);
             }
 
             const newUser = new User({
@@ -53,13 +60,13 @@ router.post('/register', (req, res) => {
                             res.json(user);
                         })
                         .catch((err) => {
-                            console.log(err);
+                            res.status(500).json({ errors : 'Internal Server Error'});
                         })
                 });
             });
         })
         .catch((err) => {
-            console.log(err);
+            res.status(500).json({ errors : 'Internal Server Error'});
         });
 });
 
@@ -80,15 +87,16 @@ router.post('/login', (req, res) => {
             // Check for user
             if (!user) {
                 errors.username = `User not found`;
-                return res.status(404).json(errors);
+                errors.errors = 1;
+                return res.json(errors);
             }
             
             bcrypt.compare(password, user.password)
                 .then((isMath) => {
                     if (isMath) {
                         // User Matched
-                        const payload = { id: user.id, name: user.name, email: user.email, birth: user.birth }
-
+                        const payload = { id: user.id, name: user.name, email: user.email}
+                        
                         jwt.sign(payload, key.secretOrKey, { expiresIn: 3600 }, (err, token) => {
                             res.json({
                                 success: true,
@@ -97,13 +105,26 @@ router.post('/login', (req, res) => {
                         });
                     } else {
                         errors.password = `Password incorrect`;
-                        return res.status(400).json(errors);
+                        return res.json(errors);
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    res.status(500).json({ errors : 'Internal Server Error'});
                 })
         })
 });
+
+//  Return current user
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+    // console.log(req.user.name);
+    res.json({ 
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        birth: req.user.birth,
+        status: req.user.status
+    })
+});
+
 
 module.exports = router;

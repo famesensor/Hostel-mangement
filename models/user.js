@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
 let userSchema = new mongoose.Schema({
     username: {
@@ -15,8 +16,8 @@ let userSchema = new mongoose.Schema({
         required: true
     },
     email: {
-            type: String,
-            required: true
+        type: String,
+        required: true
     },
     name: {
         fname: {
@@ -31,6 +32,51 @@ let userSchema = new mongoose.Schema({
     birth: {
         type: String,
         required: true
+    },
+    books: [{
+        name: {
+            fname: {
+                type: String,
+                required: true
+            },
+            lname: {
+                type: String,
+                required: true
+            }
+        },
+        phone: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            required: true
+        },
+        hostelBook: {
+            type: ObjectId,
+            ref: 'hostels'
+        },
+        dateBook: {
+            date: {
+                type: String,
+                required: true
+            },
+            time: {
+                type: String,
+                required: true
+            }
+        },
+        note: {
+            type: String
+        },
+        created: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+    status: {
+        type: String,
+        default: 'users'
     },
     created: {
         type: Date,

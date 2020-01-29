@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-let hostel = new mongoose.Schema({
+let hostelSchema = new mongoose.Schema({
     hostelname: {
         type: String,
         required: true
@@ -10,29 +10,43 @@ let hostel = new mongoose.Schema({
         required: true
     },
     detail: {
-        type: String,
-        required: true
+        atmosphere: {
+            type: String,
+        },
+        facilities: {
+            type: String
+        }
     },
     status: {
         type: String,
-        default: "Empty"
+        default: 'available'
     },
-    map: {
-        type: String,
+    room: {
+        type: Number,
         required: true
     },
-    // book: [{
-    //     date: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     bookingBy: {
-    //         type: ObjectId,
-    //         ref: "users"
-    //     }
-    // }],
+    empty: {
+        type: Number,
+        required: true
+    },
+    map: {
+        address: {
+            type: String,
+            required: true
+        },
+        latitude: {
+            type: String,
+            required: true
+        },
+        longitude: {
+            type: String,
+            required: true
+        }
+    },
     created: {
         type: Date,
         default: Date.now
     }
 });
+
+module.exports = Hostel = mongoose.model('hostel', hostelSchema);

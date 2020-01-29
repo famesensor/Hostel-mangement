@@ -7,6 +7,8 @@ const passport = require('passport');
 const app = express();
 
 const user = require('./routes/api/user');
+const post = require('./routes/api/post');
+const book = require('./routes/api/book');
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false}));
@@ -28,7 +30,9 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 // Use Routes
-app.use('/api/user', user);
+app.use('/api/users', user);
+app.use('/api/hostels', post);
+app.use('/api/books', book);
 
 // Set portnumber
 const portnumber = process.env.PORT || 3000
