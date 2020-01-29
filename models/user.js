@@ -34,6 +34,24 @@ let userSchema = new mongoose.Schema({
         required: true
     },
     book: [{
+        // name: {
+        //     fname: {
+        //         type: String,
+        //         required: true
+        //     },
+        //     lname: {
+        //         type: String,
+        //         required: true
+        //     }
+        // },
+        // phone: {
+        //     type: String,
+        //     required: true
+        // },
+        // email: {
+        //     type: String,
+        //     required: true
+        // },
         hostelBook: {
             type: ObjectId,
             ref: 'hostels'
@@ -50,6 +68,10 @@ let userSchema = new mongoose.Schema({
         },
         note: {
             type: String
+        },
+        created: {
+            type: Date,
+            default: Date.now
         }
     }],
     status: {
