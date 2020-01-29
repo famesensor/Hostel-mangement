@@ -57,11 +57,19 @@ let userSchema = new mongoose.Schema({
             ref: 'hostels'
         },
         dateBook: {
-            date: {
+            datein: {
                 type: String,
                 required: true
             },
-            time: {
+            dateout: {
+                type: String,
+                required: true
+            },
+            checkin: {
+                type: String,
+                required: true
+            },
+            checkout: {
                 type: String,
                 required: true
             }
