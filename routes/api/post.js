@@ -15,6 +15,8 @@ router.get('/test', (req, res) => {
 
 // });
 
+
+
 // List hostel route
 router.get('/listhostel', (req, res) => {
     Hostel.find()
@@ -33,7 +35,7 @@ router.get('/listhostel', (req, res) => {
 });
 
 // Hostel route by id  
-router.get('/:id', (req, res) => {
+router.get('/info/:id', (req, res) => {
     Hostel.findById(req.params.id)
         .select({created:0, __v:0})
         .then((hostel) => {
@@ -45,14 +47,14 @@ router.get('/:id', (req, res) => {
             }
         })
         .catch((err) => {
-            res.status(500).json({ errors : 'Internal Server Error'});
+            res.json({ msg : 'No hostel found with that ID'});
         });
 });
 
 // Hostel available route
 router.get('/hostel-available', (req, res) => {
     Hostel.find({ status: 'available' })
-        .select({_id:0, created:0, __v:0})
+        .select({created:0, __v:0})
         .then((hostel) => {
             if (hostel.length > 0) {
                 res.json(hostel)
