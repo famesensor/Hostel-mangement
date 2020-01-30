@@ -15,7 +15,7 @@ router.get('/test', (req, res) => {
 });
 
 // Booking route
-router.post('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
+router.post('/create/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     let empty = 0;
     const { errors, isValid } = validateBookInput(req.body);
 
